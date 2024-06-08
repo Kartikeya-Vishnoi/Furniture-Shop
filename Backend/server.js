@@ -30,7 +30,7 @@ const customerSchema = new mongoose.Schema({
 });
 
 const Customer = mongoose.model('Customer', customerSchema);
-
+app.get('/',"hi")
 // Endpoint to handle form submission
 app.post('/api/customers', async (req, res) => {
     const { name, email, phone, address } = req.body;
