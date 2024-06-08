@@ -16,7 +16,7 @@ const CustomerForm = () => {
     const onSubmit = async e => {
         e.preventDefault();
         try {
-            const res = await axios.post('https://furniture-shop-api.vercel.app/', formData);
+            const res = await axios.post('https://furniture-shop-api.vercel.app/api/customers', formData);
             alert(res.data);
         } catch (err) {
             console.error(err);

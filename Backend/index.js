@@ -36,6 +36,9 @@ app.get('/', async (req, res) => {
     console.log("henlo")
     res.json("Hi")
 })
+app.get('/chullu',async(req,res) => {
+    res.json("chullu")
+})
 
 app.post('/api/customers', async (req, res) => {
     const { name, email, phone, address } = req.body;
