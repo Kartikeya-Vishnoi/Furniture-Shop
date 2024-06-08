@@ -39,38 +39,38 @@ app.get('/', async (req,res) => {
     res.json("Hi")
 })
 
-// app.post('/api/customers', async (req, res) => {
-//     const { name, email, phone, address } = req.body;
+app.post('/api/customers', async (req, res) => {
+    const { name, email, phone, address } = req.body;
 
-//     const newCustomer = new Customer({ name, email, phone, address });
+    const newCustomer = new Customer({ name, email, phone, address });
 
-//     try {
-//         await newCustomer.save();
-//         let transporter = nodemailer.createTransport({
-//             service: 'gmail',
-//             auth: {
-//                 user: SENDER_EMAIL,
-//                 pass: PASSWORD_KEY
-//             }
-//         });
+    try {
+        await newCustomer.save();
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: SENDER_EMAIL,
+                pass: PASSWORD_KEY
+            }
+        });
 
-//         let mailOptions = {
-//             from: SENDER_EMAIL,
-//             to: RECEIVER_EMAIL, 
-//             subject: 'New Customer Inquiry',
-//             text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}`
-//         };
+        let mailOptions = {
+            from: SENDER_EMAIL,
+            to: RECEIVER_EMAIL, 
+            subject: 'New Customer Inquiry',
+            text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}`
+        };
 
-//         transporter.sendMail(mailOptions, (error, info) => {
-//             if (error) {
-//                 return res.status(500).send(error.toString());
-//             }
-//             res.status(200).send('Customer details sent to the owner!');
-//         });
-//     } catch (error) {
-//         res.status(500).send('Server Error');
-//     }
-// });
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return res.status(500).send(error.toString());
+            }
+            res.status(200).send('Customer details sent to the owner!');
+        });
+    } catch (error) {
+        res.status(500).send('Server Error');
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
