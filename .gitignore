@@ -1,4 +1,4 @@
 # .gitignore
 Backend/.env
 Backend/node_modules
-Frontend/node_modules
+client/node_modules
