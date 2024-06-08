@@ -14,7 +14,13 @@ const PASSWORD_KEY = process.env.PASSWORD_KEY
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(
+    {
+        origin: ["https://furniture-shop-api.vercel.app/"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+));
 
 // MongoDB Connection
 mongoose.connect(DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -30,7 +36,9 @@ const customerSchema = new mongoose.Schema({
 });
 
 const Customer = mongoose.model('Customer', customerSchema);
-app.get('/',"hi")
+app.get('/', async (req,res) => {
+    res.json("Hi")
+})
 // Endpoint to handle form submission
 app.post('/api/customers', async (req, res) => {
     const { name, email, phone, address } = req.body;
