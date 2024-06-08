@@ -3,16 +3,21 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const DATABASE_URL = process.env.DATABASE_URL;
+const SENDER_EMAIL = process.env.SENDER;
+const RECEIVER_EMAIL = process.env.RECEIVER;
+const PASSWORD_KEY = process.env.PASSWORD_KEY
 
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://incognitoproj:oYqQXYTb8U7DvJRq@cluster0.tymagje.mongodb.net/furnitureshop?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
 
@@ -38,14 +43,14 @@ app.post('/api/customers', async (req, res) => {
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'kartikeya.vishnoi29@gmail.com', // replace with your email
-                pass: 'xxfverflbjkgpeaq' // replace with your email password
+                user: SENDER_EMAIL, // replace with your email
+                pass: PASSWORD_KEY // replace with your email password
             }
         });
 
         let mailOptions = {
-            from: 'kartikeya.vishnoi29@gmail.com',
-            to: 'shiv.govind30@gmail.com', // replace with shop owner's email
+            from: SENDER_EMAIL,
+            to: RECEIVER_EMAIL, // replace with shop owner's email
             subject: 'New Customer Inquiry',
             text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}`
         };
