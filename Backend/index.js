@@ -1,15 +1,3 @@
-// import express from "express"
-
-// const app=express();
-// const port=9000;
-// app.use("/", async (req,res) => {
-//     console.log("henlo")
-//     res.json({message:"Hi"});
-// });
-// app.listen(9000, () => {
-//         console.log(`Server running on port ${port}`);
-// });
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -25,13 +13,11 @@ const RECEIVER_EMAIL = process.env.RECEIVER;
 const PASSWORD_KEY = process.env.PASSWORD_KEY
 
 app.use(bodyParser.json());
-app.use(cors(
-    {
-        origin: ["https://furniture-shop-api.vercel.app/"],
-        methods: ["POST", "GET"],
-        credentials: true
-    }
-));
+app.use(cors({
+    origin: ["https://furniture-shop-client-nine.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true
+}));
 
 mongoose.connect(DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected'))
@@ -46,7 +32,7 @@ const customerSchema = new mongoose.Schema({
 
 const Customer = mongoose.model('Customer', customerSchema);
 
-app.get('/', async (req,res) => {
+app.get('/', async (req, res) => {
     console.log("henlo")
     res.json("Hi")
 })
@@ -68,7 +54,7 @@ app.post('/api/customers', async (req, res) => {
 
         let mailOptions = {
             from: SENDER_EMAIL,
-            to: RECEIVER_EMAIL, 
+            to: RECEIVER_EMAIL,
             subject: 'New Customer Inquiry',
             text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}`
         };
